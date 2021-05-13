@@ -2,10 +2,10 @@ ARG slim=N
 
 FROM debian AS download
 WORKDIR /
-RUN apt update && apt install -y curl unzip && \
+RUN apt-get update && apt-get install -y curl unzip && \
     curl -O https://udomain.dl.sourceforge.net/project/pentaho/Pentaho%209.1/client-tools/pdi-ce-9.1.0.0-324.zip && \
     unzip pdi-ce-9.1.0.0-324.zip
-RUN cp /data-intgration /data-integration-slim && \
+RUN cp -r  /data-integration /data-integration-slim && \
     rm -rf /data-integration-slim/classes/kettle-lifecycle-listeners.xml && \
     rm -rf /data-integration-slim/classes/kettle-registry-extensions.xml && \
     rm -rf /data-integration-slim/lib/mondrian-*.jar && \
