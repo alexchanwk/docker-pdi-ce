@@ -1,0 +1,19 @@
+sudo: required
+
+dist: trusty
+
+language: generic
+
+jobs:
+  include:
+    - stage: build docker image
+      script:
+      - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+      - docker build --build-arg slim=N -t docker-pdi.ce:9.1 .
+      - docker images
+      - docker tag docker-pdi.ce:9.1 $DOCKER_ORGANIZATION/docker-pdi.ce:9.1
+      - docker push $DOCKER_ORGANIZATION/docker-pdi.ce:9.1
+      - docker build --build-arg slim=Y -t docker-pdi.ce:9.1-slim .
+      - docker images
+      - docker tag docker-pdi.ce:9.1-slim $DOCKER_ORGANIZATION/docker-pdi.ce:9.1-slim
+      - docker push $DOCKER_ORGANIZATION/docker-pdi.ce:9.1-slim
