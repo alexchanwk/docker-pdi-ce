@@ -33,3 +33,9 @@ WORKDIR /
 COPY --from=download  /data-integration  /
 
 FROM copy-slim-${slim}
+
+ENV HOST=0.0.0.0 PORT=8080
+EXPOSE ${PORT}
+
+ENTRYPOINT [ "carte.sh" ]
+CMD ["${HOST}", "${PORT}"]
